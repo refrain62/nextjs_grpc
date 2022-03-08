@@ -138,7 +138,8 @@ yarn run ts-node-dev src/index.ts
  or
 yarn dev
 ```
-![サーバーログ](/_description/server.jpg "サーバーログ")
+正常動作時   
+![サーバーログ](/_description/server.jpg "サーバーログ")   
 
 
 - クライアント
@@ -147,13 +148,15 @@ cd ./client
 
 yarn dev
 ```
-正常動作時
-![動作サンプル](/_description/sample1.jpg "動作サンプル")
-
-通信エラー時
-![通信エラー時](/_description/sample2.jpg "通信エラー時")
-
-![クライアントログ](/_description/client.jpg "クライアントログ")
+正常動作時   
+![動作サンプル](/_description/sample1.jpg "動作サンプル")   
+   
+   
+通信エラー時   
+![通信エラー時](/_description/sample_error.jpg "通信エラー時")   
+   
+   
+![クライアントログ](/_description/client.jpg "クライアントログ")   
 
    
 ## 参考文献
