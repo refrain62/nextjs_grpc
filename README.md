@@ -102,6 +102,60 @@ yarn run ts-node-dev src/index.ts
 
 
 
+## クライアントの開発
+- まずはルートフォルダに移動し、ベースプロジェクト作成
+```
+yarn create next-app client --ts
+```
+
+- /client に移動し必要なライブラリの追加
+```
+yarn add @grpc/grpc-js google-protobuf
+yarn add -D grpc-tools grpc_tools_node_protoc_ts
+mkdir codegen
+
+↓Windows
+yarn run grpc_tools_node_protoc --plugin=./node_modules/.bin/protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:codegen --grpc_out=grpc_js:codegen --ts_out=grpc_js:codegen -I ../ ../protos/user.proto
+
+↓それ以外
+yarn run grpc_tools_node_protoc --plugin=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:codegen --grpc_out=grpc_js:codegen --ts_out=grpc_js:codegen -I ../ ../protos/user.proto
+```
+※Windowsの場合は「protoc-gen-ts.cmd」に変更しないとエラーになります。   
+「--ts_out: protoc-gen-ts: %1 is not a valid Win32 application.」   
+   
+   
+- gRPCクライアント機能の実装 /pages/api/user.ts
+
+- gRPCクライアント画面の実装 /pages/index.ts
+
+
+## サーバーとクライアントをそれぞれ起動して動作確認
+- サーバー
+```
+cd ./server
+
+yarn run ts-node-dev src/index.ts
+ or
+yarn dev
+```
+![サーバーログ](/_description/server.jpg "サーバーログ")
+
+
+- クライアント
+```
+cd ./client
+
+yarn dev
+```
+正常動作時
+![動作サンプル](/_description/sample1.jpg "動作サンプル")
+
+通信エラー時
+![通信エラー時](/_description/sample2.jpg "通信エラー時")
+
+![クライアントログ](/_description/client.jpg "クライアントログ")
+
+   
 ## 参考文献
 ・gRPCで使う.protoファイルの書き方まとめ   
 https://qiita.com/Captain_Blue/items/b7a1f4a42f48559fac0c   
