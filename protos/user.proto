@@ -1,0 +1,82 @@
+// gRPCの書き方について指南
+// https://qiita.com/Captain_Blue/items/b7a1f4a42f48559fac0c
+
+// バージョン定義
+syntax = "proto3";
+
+
+// パッケージの定義
+// 他の.protoファイルで定義したメッセージを使う時など名前の衝突を避けるためにパッケージ名を設定可能
+// package user
+
+
+// import
+// 他の.protoファイルで定義したメッセージ型を使いたい場合に使う
+// 例はGoogleが作成した.protoファイルを import している
+// import "google/protobuf/timestamp.proto";
+// import "google/protobuf/duration.proto";
+
+
+// サービスとRPCメソッド定義
+service UserManager {
+  rpc get (UserRequest) returns (UserResponse) {}
+  
+  // サーバーストリーミングRPC
+  // rpc UserServiceStreamMethod (UserRequest) returns (stream UserRespose);
+  
+  // クライアントストリーミングRPC
+  // rpc UserClientStreamMethod (stream UserRequest) returns (UserResponse);
+  
+  // 双方向ストリーミングRPC
+  // rpc UserBidirectionalMethod (stream UserRequest) returns (stream UserResponse);
+}
+
+
+// メッセージ型（右の数字は「タグナンバー」）
+message User {
+  // スカラー型
+  // 数値、文字列、真偽値、バイト配列がある
+  uint32 id = 1;
+  string name = 2;
+  bool is_admin = 3;
+  
+  // deprecated 廃止予定かつ非推奨であるフィールドを明示
+  // string duplicate_faild = 4 [deprecated = true]
+  
+  // reversed識別子 廃止にしたタグナンバー
+  // reserved 7, 8, 10 to 12;
+  
+  // リスト（配列） - 多次元配列は定義できない
+  // repeated UserList user_list = 5;
+  
+  // マップ（連想配列）
+  // map<string, string> user_map = 6;
+  
+  // 複数の中からどれか一つ
+  // oneof user {
+  //   string one = 1;
+  //   string other = 2;
+  // }
+  
+  // Well Known Types
+  // google.protobuf.Duration user_duration = 9;
+  // google.protpbuf.Timestamp craete_time = 13;
+  
+  // 列挙型
+  // enum UserEnum {
+  //   UNKNOWN = 0;
+  //   TEST1 = 1;
+  //   TEST2 = 2;
+  //   TEST3 = 3;
+  // }
+}
+
+
+message UserRequest {
+  uint32 id = 1;
+}
+
+message UserResponse {
+  User user = 1;
+}
+

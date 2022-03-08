@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "codegen": "grpc_tools_node_protoc --plugin=./node_modules/.bin/protoc-gen-ts.cmd --js_out=import_style=commonjs,binary:codegen --grpc_out=grpc_js:codegen --ts_out=grpc_js:codegen -I ../ ../protos/user.proto"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.5.7",
+    "google-protobuf": "^3.20.0-rc.1",
+    "ts-protoc-gen": "^0.15.0"
+  },
+  "devDependencies": {
+    "grpc-tools": "^1.11.2",
+    "grpc_tools_node_protoc_ts": "^5.3.2",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.2"
+  }
+}
